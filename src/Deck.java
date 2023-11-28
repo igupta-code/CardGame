@@ -6,13 +6,11 @@ public class Deck {
     //constructor
     public Deck(String[] ranks, String[] suits,  int[] values){
         cardsLeft = 0;
+        cards = new ArrayList<Card>();
         for (int i = 0; i < ranks.length; i++) {
-            for(int j = 0; j < suits.length; j++){
-                for (int m = 0; m < values.length; m++) {
-                    Card card = new Card(ranks[i], suits[j], values[m]);
-                    cards.add(card);
-                    cardsLeft++;
-                }
+            for (int j = 0; j < suits.length; j++){
+                cards.add(new Card(ranks[i], suits[j], values[i]));
+                cardsLeft++;
             }
         }
     }
@@ -24,5 +22,25 @@ public class Deck {
     public int getCardsLeft(){
         return cardsLeft;
     }
+
+    public Card deal(){
+        if (isEmpty())
+            return null;
+
+        cardsLeft--;
+        return cards.get(cardsLeft);
+    }
+
+    public void shuffle(){
+        Card holder = new Card("","", 0);
+        int r = 0;
+        for (int i = cards.size(); i >= 0; i--){
+            r = (int)(Math.random()*(cards.size()));
+            holder = cards.set(i, cards.get(r));
+            cards.set(r, holder);
+        }
+    }
+
+
 
 }
