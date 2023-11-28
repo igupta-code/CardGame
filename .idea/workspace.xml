@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="c7887112-c6a3-4919-b367-593f1ce39145" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Card.java" afterDir="false" />
-    </list>
+    <list default="true" id="c7887112-c6a3-4919-b367-593f1ce39145" name="Changes" comment="added card, deck, game, and player classes" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -42,11 +43,45 @@
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="c7887112-c6a3-4919-b367-593f1ce39145" name="Changes" comment="" />
+      <changelist id="" name="Deck" comment="" />
       <created>1701121215422</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1701121215422</updated>
     </task>
+    <task id="LOCAL-00001" summary="Created constructor">
+      <option name="closed" value="true" />
+      <created>1701121795354</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1701121795354</updated>
+    </task>
+    <task id="LOCAL-00002" summary="added card, deck, game, and player classes">
+      <option name="closed" value="true" />
+      <created>1701154366792</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1701154366792</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Created constructor" />
+    <MESSAGE value="added card, deck, game, and player classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="added card, deck, game, and player classes" />
   </component>
 </project>
