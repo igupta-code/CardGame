@@ -36,7 +36,7 @@ public class Deck {
         cardsLeft = cards.size();
         Card holder = new Card("","", 0);
         int r = 0;
-        for (int i = cardsLeft; i >= 0; i--){
+        for (int i = cardsLeft-1; i >= 0; i--){
             r = (int)(Math.random()*(cards.size()));
             holder = cards.set(i, cards.get(r));
             cards.set(r, holder);
