@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -14,14 +15,24 @@ public class Game {
     private static Player user;
     private static Player comp;
     private boolean hasWon;
+    private GameViewer window;
+    private Image[] deckImages = new Image[32];
 
     // Constructor
     public Game(){
         //init and shuffle deck
+
         String[] suits = {"diamonds", "hearts", "spades", "club"};
         String[] ranks = {"Ace","2","3","4","5","6","7","8","9","10","Jack", "Queen", "King" };
         int[] values = {1,2,3,4,5,6,7,8,9,10, 11, 12, 13};
-        deck = new Deck(ranks, suits, values);
+        //imageX = new ImageIcon("Resources/X.png").getImage();
+        for(int i = 0; i < deckImages.length; i++){
+            deckImages[i] = new ImageIcon("Resources/Cards/" + i+1 + ".png").getImage();
+            //set the card image equal to this card
+            // game.getDeck().deal()
+        }
+        deck = new Deck(ranks, suits, values, deckImages, window);
+        window = new GameViewer(this);
         deck.shuffle();
 
         //Init the players and deal hands
@@ -39,10 +50,28 @@ public class Game {
 
         // Initialize the pile
         //pile = new ArrayList<>();
-        pile = new Card("", "", 0);
+        pile = new Card("", "", 0, null, null);
 
         hasWon = false;
     }
+
+    // Getters
+    public Deck getDeck() {
+        return deck;
+    }
+
+    public ArrayList<Card> getCompHand() {
+        return compHand;
+    }
+
+    public ArrayList<Card> getUserHand() {
+        return userHand;
+    }
+
+    public boolean isHasWon() {
+        return hasWon;
+    }
+
 
     public void printInstructions(){
         //Instructions!
@@ -61,6 +90,7 @@ public class Game {
         //deal the first card
         pile = deck.deal();
         System.out.println("pile: " + pile);
+        window.repaint();
         // while the game isn't done, alternate between player/user turns
         while (!hasWon){
             if (playerTurn()){
