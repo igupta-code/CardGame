@@ -14,23 +14,26 @@ public class Game {
     private ArrayList<Card> compHand;
     private static Player user;
     private static Player comp;
-    private boolean hasWon;
+    private boolean hasWon,
+                    hasStarted;
     private GameViewer window;
-    private Image[] deckImages = new Image[32];
+    private Image[] deckImages;
 
     // Constructor
     public Game(){
         //init and shuffle deck
 
-        String[] suits = {"diamonds", "hearts", "spades", "club"};
+        String[] suits = { "spades", "hearts", "diamonds", "club"};
         String[] ranks = {"Ace","2","3","4","5","6","7","8","9","10","Jack", "Queen", "King" };
         int[] values = {1,2,3,4,5,6,7,8,9,10, 11, 12, 13};
         //imageX = new ImageIcon("Resources/X.png").getImage();
+        deckImages = new Image[53];
         for(int i = 0; i < deckImages.length; i++){
-            deckImages[i] = new ImageIcon("Resources/Cards/" + i+1 + ".png").getImage();
+            deckImages[i] = new ImageIcon("Resources/Cards/" + (i+1) + ".png").getImage();
             //set the card image equal to this card
             // game.getDeck().deal()
         }
+        window = new GameViewer(this);
         deck = new Deck(ranks, suits, values, deckImages, window);
         window = new GameViewer(this);
         deck.shuffle();
@@ -53,6 +56,7 @@ public class Game {
         pile = new Card("", "", 0, null, null);
 
         hasWon = false;
+        hasStarted = false;
     }
 
     // Getters
@@ -68,8 +72,12 @@ public class Game {
         return userHand;
     }
 
-    public boolean isHasWon() {
+    public boolean getHasWon() {
         return hasWon;
+    }
+
+    public boolean getHasStarted(){
+        return hasStarted;
     }
 
 
@@ -83,6 +91,7 @@ public class Game {
         System.out.println("Whoever runs out of cards first or has the least number of " +
                 "cards when the deck runs out wins! \n");
         System.out.println();
+        hasStarted = true;
     }
 
 
@@ -99,20 +108,27 @@ public class Game {
                     System.out.println(checkWin());
                     return;
                 }
+                window.repaint();
                 System.out.println("pile: " + pile);
                 System.out.println();
+                window.repaint();
 
                 System.out.println("Computer's turn");
                 computerTurn();
                 System.out.println("Computer has " + compHand.size() + " cards.");
                 System.out.println();
+                window.repaint();
 
                 System.out.println("pile: " + pile);
                 System.out.println(user);
+                window.repaint();
             }
             checkWin();
         }
         System.out.println(checkWin());
+        window.repaint();
+
+        // do i need all these repaints??
     }
 
     // sets boolean hasWon and returns the print statement depending on who's won
