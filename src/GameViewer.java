@@ -10,7 +10,8 @@ public class GameViewer extends JFrame {
             LABEL_OFFSET = (int)(WINDOW_WIDTH*0.05);
     public final String TITLE = "Crazy 8's";
     private Image instructions,
-            table;
+            table,
+            cardBack;
 
 
     private Game game;
@@ -19,6 +20,7 @@ public class GameViewer extends JFrame {
         //imageO = new ImageIcon("Cards/O.png").getImage();
         instructions = new ImageIcon("Resources/instructions.png").getImage();
         table = new ImageIcon("Resources/table.png").getImage();
+        cardBack = new ImageIcon("Resources/Cards/back.png").getImage();
 
 
         this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -31,9 +33,14 @@ public class GameViewer extends JFrame {
         if(!game.getHasStarted()){
             g.drawImage(instructions, 0,0, WINDOW_WIDTH, WINDOW_HEIGHT, this);
         }
-       if(game.getHasStarted()) {
+       if(game.getHasStarted()){
            g.drawImage(table, 0,0, WINDOW_WIDTH, WINDOW_HEIGHT, this);
-           for (int i = 0; i < game.getUserHand().size(); i++) {
+           int yPos = WINDOW_HEIGHT/2 - Card.CARD_HEIGHT/2;
+           g.drawImage(cardBack, WINDOW_WIDTH/2 - 2*Card.CARD_WIDTH,yPos, Card.CARD_WIDTH, Card.CARD_HEIGHT, this);
+           game.getPile().draw(g, WINDOW_WIDTH/2 + Card.CARD_WIDTH, yPos);
+
+
+           for (int i = 0; i < game.getUserHand().size(); i++){
                // Spacing determines the leftmost x coordinate of card in player's hand
                int spacing = BUFFER_X + i*((WINDOW_WIDTH - 2*BUFFER_X)/game.getUserHand().size());
                game.getUserHand().get(i).draw(g, spacing, WINDOW_HEIGHT - BUFFER_Y - Card.CARD_HEIGHT);
@@ -41,6 +48,10 @@ public class GameViewer extends JFrame {
                g.setColor(Color.BLACK);
                g.setFont(new Font("Serif", Font.PLAIN, 30));
                g.drawString(Integer.toString(i), spacing + Card.CARD_WIDTH/2, WINDOW_HEIGHT-BUFFER_Y + LABEL_OFFSET);
+           }
+           for (int i = 0; i < game.getCompHand().size(); i++){
+               int spacing = BUFFER_X + i*((WINDOW_WIDTH - 2*BUFFER_X)/game.getCompHand().size());
+               g.drawImage(cardBack, spacing, BUFFER_Y, Card.CARD_WIDTH, Card.CARD_HEIGHT, this);
            }
        }
     }

@@ -19,6 +19,7 @@ public class Game {
     private GameViewer window;
     private Image[] deckImages;
 
+
     // Constructor
     public Game(){
         //init and shuffle deck
@@ -66,6 +67,9 @@ public class Game {
 
     public ArrayList<Card> getCompHand() {
         return compHand;
+    }
+    public Card getPile(){
+        return pile;
     }
 
     public ArrayList<Card> getUserHand() {
