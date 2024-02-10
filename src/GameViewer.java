@@ -11,7 +11,10 @@ public class GameViewer extends JFrame {
     public final String TITLE = "Crazy 8's";
     private Image instructions,
             table,
-            cardBack;
+            cardBack,
+            lost,
+            tie,
+            won;
 
 
     private Game game;
@@ -21,7 +24,9 @@ public class GameViewer extends JFrame {
         instructions = new ImageIcon("Resources/instructions.png").getImage();
         table = new ImageIcon("Resources/table.png").getImage();
         cardBack = new ImageIcon("Resources/Cards/back.png").getImage();
-
+        lost = new ImageIcon("Resources/lost.png").getImage();
+        tie = new ImageIcon("Resources/tie.png").getImage();
+        won = new ImageIcon("Resources/won.png").getImage();
 
         this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -33,7 +38,8 @@ public class GameViewer extends JFrame {
         if(!game.getHasStarted()){
             g.drawImage(instructions, 0,0, WINDOW_WIDTH, WINDOW_HEIGHT, this);
         }
-       if(game.getHasStarted()){
+
+       if(game.getHasStarted() && !game.getHasWon()){
            g.drawImage(table, 0,0, WINDOW_WIDTH, WINDOW_HEIGHT, this);
            int yPos = WINDOW_HEIGHT/2 - Card.CARD_HEIGHT/2;
            g.drawImage(cardBack, WINDOW_WIDTH/2 - 2*Card.CARD_WIDTH,yPos, Card.CARD_WIDTH, Card.CARD_HEIGHT, this);
@@ -53,6 +59,20 @@ public class GameViewer extends JFrame {
                int spacing = BUFFER_X + i*((WINDOW_WIDTH - 2*BUFFER_X)/game.getCompHand().size());
                g.drawImage(cardBack, spacing, BUFFER_Y, Card.CARD_WIDTH, Card.CARD_HEIGHT, this);
            }
+       }
+
+       if(game.getHasWon()){
+           if(game.getWinner() == 0){
+               g.drawImage(won, 0,0, WINDOW_WIDTH, WINDOW_HEIGHT, this);
+           }
+           else if(game.getWinner() == 1){
+               g.drawImage(lost, 0,0, WINDOW_WIDTH, WINDOW_HEIGHT, this);
+           }
+           else{
+               g.drawImage(tie, 0,0, WINDOW_WIDTH, WINDOW_HEIGHT, this);
+           }
+
+
        }
     }
 }

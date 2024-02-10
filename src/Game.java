@@ -16,6 +16,7 @@ public class Game {
     private static Player comp;
     private boolean hasWon,
                     hasStarted;
+    private int winner;
     private GameViewer window;
     private Image[] deckImages;
 
@@ -37,6 +38,7 @@ public class Game {
         window = new GameViewer(this);
         deck = new Deck(ranks, suits, values, deckImages, window);
         window = new GameViewer(this);
+        winner = -1;
         deck.shuffle();
 
         //Init the players and deal hands
@@ -53,7 +55,6 @@ public class Game {
         comp = new Player("Computer", compHand);
 
         // Initialize the pile
-        //pile = new ArrayList<>();
         pile = new Card("", "", 0, null, null);
 
         hasWon = false;
@@ -78,6 +79,10 @@ public class Game {
 
     public boolean getHasWon() {
         return hasWon;
+    }
+
+    public int getWinner(){
+        return winner;
     }
 
     public boolean getHasStarted(){
@@ -109,10 +114,10 @@ public class Game {
             if (playerTurn()){
                 checkWin();
                 if (hasWon) {
+                    window.repaint();
                     System.out.println(checkWin());
                     return;
                 }
-                window.repaint();
                 System.out.println("pile: " + pile);
                 System.out.println();
                 window.repaint();
@@ -121,40 +126,47 @@ public class Game {
                 computerTurn();
                 System.out.println("Computer has " + compHand.size() + " cards.");
                 System.out.println();
-                window.repaint();
+                //window.repaint();
 
                 System.out.println("pile: " + pile);
                 System.out.println(user);
                 window.repaint();
             }
             checkWin();
+            //window.repaint();
         }
         System.out.println(checkWin());
         window.repaint();
 
-        // do i need all these repaints??
+        // Do i need all these repaints??
     }
 
     // sets boolean hasWon and returns the print statement depending on who's won
     public String checkWin(){
         if(userHand.isEmpty()){
             hasWon = true;
+            winner = 0;
             return "Congrats you won!";
         }
         if (compHand.isEmpty()){
             hasWon = true;
+            winner = 1;
             return "Oh no, the computer won!";
         }
         if (deck.isEmpty()){
             hasWon = true;
             if (userHand.size() < compHand.size()){
+                winner = 0;
                 return "Congrats you won!";
             }
-            if (userHand.size() > compHand.size()){
+            if (userHand.size() > compHand.size()) {
+                winner = 1;
                 return "Oh no, the computer won!";
             }
-            else
+            else {
+                winner = 2;
                 return "It's a tie!";
+            }
         }
         return null;
     }
