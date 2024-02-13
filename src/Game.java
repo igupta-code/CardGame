@@ -1,3 +1,12 @@
+// Isha Gupta
+// Feb 16, 2024
+
+/*
+The Game class controls the whole game of Crazy 8s. The constructor initializes the player, the deck, pile, and
+a GameViewer class allowing for the sharing of data. Key methods print the instructions(on the terminal),
+the playGame method facilitates the game, and of course, the main method puts it together.
+ */
+
 import javax.swing.*;
 import java.awt.*;
 import java.sql.SQLOutput;
@@ -13,27 +22,21 @@ public class Game {
     private ArrayList<Card> userHand;
     private ArrayList<Card> compHand;
     private static Player user;
-    private static Player comp;
     private boolean hasWon,
                     hasStarted;
     private int winner;
     private GameViewer window;
     private Image[] deckImages;
 
-
     // Constructor
     public Game(){
-        //init and shuffle deck
-
+        // Initializes and shuffles deck
         String[] suits = { "spades", "hearts", "diamonds", "club"};
         String[] ranks = {"Ace","2","3","4","5","6","7","8","9","10","Jack", "Queen", "King" };
         int[] values = {1,2,3,4,5,6,7,8,9,10, 11, 12, 13};
-        //imageX = new ImageIcon("Resources/X.png").getImage();
         deckImages = new Image[53];
         for(int i = 0; i < deckImages.length; i++){
             deckImages[i] = new ImageIcon("Resources/Cards/" + (i+1) + ".png").getImage();
-            //set the card image equal to this card
-            // game.getDeck().deal()
         }
         window = new GameViewer(this);
         deck = new Deck(ranks, suits, values, deckImages, window);
@@ -41,7 +44,7 @@ public class Game {
         winner = -1;
         deck.shuffle();
 
-        //Init the players and deal hands
+        // Init the players and deal hands
         System.out.println("Enter your name: ");
         String userName = input.nextLine();
         userHand = new ArrayList<>();
@@ -52,7 +55,6 @@ public class Game {
         }
 
         user = new Player(userName, userHand);
-        comp = new Player("Computer", compHand);
 
         // Initialize the pile
         pile = new Card("", "", 0, null, null);
@@ -61,14 +63,11 @@ public class Game {
         hasStarted = false;
     }
 
-    // Getters
-    public Deck getDeck() {
-        return deck;
-    }
-
+    // Getters to share data with GameViewer
     public ArrayList<Card> getCompHand() {
         return compHand;
     }
+
     public Card getPile(){
         return pile;
     }
@@ -89,7 +88,6 @@ public class Game {
         return hasStarted;
     }
 
-
     public void printInstructions(){
         //Instructions!
         System.out.println("Welcome to a game of Crazy 8's");
@@ -103,7 +101,7 @@ public class Game {
         hasStarted = true;
     }
 
-
+    // This method alternates between the player's/computer's turn until someone wins or ties.
     public void playGame(){
         //deal the first card
         pile = deck.deal();
@@ -126,22 +124,19 @@ public class Game {
                 computerTurn();
                 System.out.println("Computer has " + compHand.size() + " cards.");
                 System.out.println();
-                //window.repaint();
 
                 System.out.println("pile: " + pile);
                 System.out.println(user);
                 window.repaint();
             }
             checkWin();
-            //window.repaint();
         }
         System.out.println(checkWin());
         window.repaint();
-
-        // Do i need all these repaints??
     }
 
-    // sets boolean hasWon and returns the print statement depending on who's won
+    // Sets boolean hasWon and returns the print statement depending on who's won
+    // The winner variable is shared with gameViewer so the window know what message to print as well.
     public String checkWin(){
         if(userHand.isEmpty()){
             hasWon = true;
@@ -186,27 +181,25 @@ public class Game {
 
     // Returns true once player's turn is over
     public boolean playerTurn(){
-        //ask to go
+        // Asks player to go
         System.out.println("Your turn! Enter the index of your card. If you can't play, enter -1.");
         int play = input.nextInt();
         if (play < 0){
             userHand.add(deck.deal());
             return true;
         }
-        //check if its valid
+        // Checks if card is valid
         if (play < userHand.size() && checkCard(userHand.get(play))){
             pile = userHand.remove(play);
             return true;
-
         }
         else{
             System.out.println("invalid card");
             return false;
         }
-
     }
 
-    //returns true if suits/value match or if it's an eight
+    // Returns true if suits/value match or if it's an eight
     public boolean checkCard(Card card){
         if (pile.getSuit().equals(card.getSuit())){
             return true;
@@ -216,13 +209,11 @@ public class Game {
         return pilePt == cardPt || pilePt == 8 || cardPt == 8;
     }
 
-
     // Main!!
     public static void main(String[] args) {
         Game g = new Game();
         g.printInstructions();
         System.out.println(user);
         g.playGame();
-
     }
 }

@@ -1,10 +1,19 @@
+// Isha Gupta
+// Feb 16, 2024
+
+/*
+The Deck class initializes all the cards and adds them to an ArrayList of Cards(the deck).
+Additionally, it performs the functions of a deck: dealing a card, shuffling the deck
+and seeing if the deck is empty.
+ */
+
 import java.awt.*;
 import java.util.ArrayList;
 public class Deck {
     private ArrayList<Card> cards;
     private int cardsLeft;
 
-    //constructor
+    // Constructor initializes each Card and adds it to ArrayList cards
     public Deck(String[] ranks, String[] suits,  int[] values, Image[] deckImages, GameViewer window){
         cardsLeft = 0;
         cards = new ArrayList<Card>();
@@ -21,6 +30,7 @@ public class Deck {
             return true;
         return false;
     }
+
     public int getCardsLeft(){
         return cardsLeft;
     }
@@ -45,7 +55,4 @@ public class Deck {
             cards.set(r, holder);
         }
     }
-
-
-
 }

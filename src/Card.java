@@ -1,3 +1,11 @@
+// Isha Gupta
+// Feb 16, 2024
+
+/*
+The Card class creates and initializes the outline of each card.
+Each card has a suit, rank, image, and point value.
+A card also knows how to draw itself.
+*/
 import java.awt.*;
 
 public class Card {

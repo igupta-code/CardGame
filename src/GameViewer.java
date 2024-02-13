@@ -1,3 +1,11 @@
+// Isha Gupta
+// Feb 16, 2024
+/*
+The GameViewer class displays the game on the window. It creates a new window, initializes and prints background
+images, prints instructions, decides the position of the cards depending on the size of the hand, and prints a wining
+message.
+ */
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -42,7 +50,8 @@ public class GameViewer extends JFrame {
        if(game.getHasStarted() && !game.getHasWon()){
            g.drawImage(table, 0,0, WINDOW_WIDTH, WINDOW_HEIGHT, this);
            int yPos = WINDOW_HEIGHT/2 - Card.CARD_HEIGHT/2;
-           g.drawImage(cardBack, WINDOW_WIDTH/2 - 2*Card.CARD_WIDTH,yPos, Card.CARD_WIDTH, Card.CARD_HEIGHT, this);
+           g.drawImage(cardBack, WINDOW_WIDTH/2 - 2*Card.CARD_WIDTH,yPos, Card.CARD_WIDTH,
+                   Card.CARD_HEIGHT, this);
            game.getPile().draw(g, WINDOW_WIDTH/2 + Card.CARD_WIDTH, yPos);
 
 
@@ -53,7 +62,8 @@ public class GameViewer extends JFrame {
 
                g.setColor(Color.BLACK);
                g.setFont(new Font("Serif", Font.PLAIN, 30));
-               g.drawString(Integer.toString(i), spacing + Card.CARD_WIDTH/2, WINDOW_HEIGHT-BUFFER_Y + LABEL_OFFSET);
+               g.drawString(Integer.toString(i), spacing + Card.CARD_WIDTH/2,
+                       WINDOW_HEIGHT-BUFFER_Y + LABEL_OFFSET);
            }
            for (int i = 0; i < game.getCompHand().size(); i++){
                int spacing = BUFFER_X + i*((WINDOW_WIDTH - 2*BUFFER_X)/game.getCompHand().size());
@@ -71,8 +81,6 @@ public class GameViewer extends JFrame {
            else{
                g.drawImage(tie, 0,0, WINDOW_WIDTH, WINDOW_HEIGHT, this);
            }
-
-
        }
     }
 }
