@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Game {
@@ -179,13 +180,23 @@ public class Game {
 
     // Returns true once player's turn is over
     public boolean playerTurn(){
-        // Asks player to go
+        // Asks for player input
         System.out.println("Your turn! Enter the index of your card. If you can't play, enter -1.");
-        int play = input.nextInt();
+        int play = -2;
+        while(play == -2) {
+            try {
+                play = input.nextInt();
+            } catch (InputMismatchException e) {
+                input.nextLine();
+                System.out.println("Please enter an int!");
+            }
+        }
+
         if(play < 0){
             userHand.add(deck.deal());
             return true;
         }
+
         // Checks if card is valid
         if(play < userHand.size() && checkCard(userHand.get(play))){
             pile = userHand.remove(play);
