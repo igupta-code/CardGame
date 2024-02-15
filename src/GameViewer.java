@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GameViewer extends JFrame {
+    // Variables for formatting and spacing
     public static final int WINDOW_WIDTH = 1000,
             WINDOW_HEIGHT = 800,
             BUFFER_X = (int)(WINDOW_WIDTH*0.2),
@@ -23,12 +24,13 @@ public class GameViewer extends JFrame {
             lost,
             tie,
             won;
-
-
     private Game game;
+
     public GameViewer(Game game){
+        // Creating an instance of Game allows data sharing/access to variables and methods in game
         this.game = game;
-        //imageO = new ImageIcon("Cards/O.png").getImage();
+
+        // Initializes background images and the image for the back of the card
         instructions = new ImageIcon("Resources/instructions.png").getImage();
         table = new ImageIcon("Resources/table.png").getImage();
         cardBack = new ImageIcon("Resources/Cards/back.png").getImage();
@@ -36,6 +38,7 @@ public class GameViewer extends JFrame {
         tie = new ImageIcon("Resources/tie.png").getImage();
         won = new ImageIcon("Resources/won.png").getImage();
 
+        // Creates a new window
         this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setTitle(TITLE);
@@ -43,23 +46,27 @@ public class GameViewer extends JFrame {
     }
 
     public void paint(Graphics g){
+        // Prints the opening screen with instructions
         if(!game.getHasStarted()){
             g.drawImage(instructions, 0,0, WINDOW_WIDTH, WINDOW_HEIGHT, this);
         }
 
+        // This gets called while the game is being played
        if(game.getHasStarted() && !game.getHasWon()){
+           // Sets up: draws table backdrop, the deck image, and the pile
            g.drawImage(table, 0,0, WINDOW_WIDTH, WINDOW_HEIGHT, this);
            int yPos = WINDOW_HEIGHT/2 - Card.CARD_HEIGHT/2;
            g.drawImage(cardBack, WINDOW_WIDTH/2 - 2*Card.CARD_WIDTH,yPos, Card.CARD_WIDTH,
                    Card.CARD_HEIGHT, this);
            game.getPile().draw(g, WINDOW_WIDTH/2 + Card.CARD_WIDTH, yPos);
 
-
+           // Prints out the user's hand and the computer's hand with spacing based off of hand's size
            for (int i = 0; i < game.getUserHand().size(); i++){
-               // Spacing determines the leftmost x coordinate of card in player's hand
+               // Prints user's cards
                int spacing = BUFFER_X + i*((WINDOW_WIDTH - 2*BUFFER_X)/game.getUserHand().size());
                game.getUserHand().get(i).draw(g, spacing, WINDOW_HEIGHT - BUFFER_Y - Card.CARD_HEIGHT);
 
+               // Dynamically prints the numbers below the cards
                g.setColor(Color.BLACK);
                g.setFont(new Font("Serif", Font.PLAIN, 30));
                g.drawString(Integer.toString(i), spacing + Card.CARD_WIDTH/2,
@@ -71,6 +78,7 @@ public class GameViewer extends JFrame {
            }
        }
 
+       // Prints the final message depending on who won the game
        if(game.getHasWon()){
            if(game.getWinner() == 0){
                g.drawImage(won, 0,0, WINDOW_WIDTH, WINDOW_HEIGHT, this);
